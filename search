@@ -27,13 +27,17 @@ done
 # Setup variables to pass to egrep
 #---------------------------------
 SEARCH_TERM=$1
+# May wish to override DEFAULT_SEARCH_DIRECTORIES with a specific directory
+# list as applicable to the project you are currently working on.
+# In liu of another default, search in the current working directory "."
+DEFAULT_SEARCH_DIRECTORIES=.
 if [[ $# -lt 2 ]]; then
-   SEARCH_DIRECTORY=.
+   SEARCH_DIRECTORIES=$DEFAULT_SEARCH_DIRECTORIES
 else
-   SEARCH_DIRECTORY=$2
+   SEARCH_DIRECTORIES=$2
 fi
 
 #---------------
 # Perform search
 #---------------
-egrep -ir --include={"*.f","*.f90","*.F","*.F90","*.h","*.c","*.cpp","*.tcc","*.py","*.m"} --color=always $SEARCH_TERM $SEARCH_DIRECTORY
+egrep -ir --include={"*.f","*.f90","*.F","*.F90","*.h","*.c","*.cpp","*.tcc","*.py","*.m"} --color=always $SEARCH_TERM $SEARCH_DIRECTORIES
