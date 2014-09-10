@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Usage: search <search_term> [search_directory]
+#        search --help
+
+#-------------------------------------------
+# Show help if requested or upon input error
+#-------------------------------------------
+show_usage() {
+   echo "Usage: $0 <search_term> [search_directory]"
+   echo "       $0 --help"
+}
+
+if [[ $# -lt 1 || $# -gt 2 ]]; then
+   show_usage
+   exit
+fi
+
+for arg in $@; do
+   if [ "$arg" == "--help" ]; then
+      show_usage
+      exit
+   fi
+done
+
+#---------------------------------
+# Setup variables to pass to egrep
+#---------------------------------
+SEARCH_TERM=$1
+if [[ $# -lt 2 ]]; then
+   SEARCH_DIRECTORY=.
+else
+   SEARCH_DIRECTORY=$2
+fi
+
+#---------------
+# Perform search
+#---------------
+egrep -ir --include={"*.f","*.f90","*.F","*.F90","*.h","*.c","*.cpp","*.tcc","*.py","*.m"} --color=always $SEARCH_TERM $SEARCH_DIRECTORY
