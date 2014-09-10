@@ -1,0 +1,8 @@
+#!/bin/bash
+for dir in $(find . -name ".git"); do
+   echo "-------------------------------------------------- ${dir%/*}"
+   cd ${dir%/*};
+   echo "Running git $@"
+   git $@ || exit
+   cd -
+done
