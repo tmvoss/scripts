@@ -1,8 +1,25 @@
 #!/bin/bash
-for dir in $(find . -name ".git"); do
-   echo "-------------------------------------------------- ${dir%/*}"
-   cd ${dir%/*};
-   echo "Running git $@"
-   git $@ || exit
-   cd -
-done
+
+show_usage() {
+   echo "Usage: git-subdir <git-arguments>"
+   echo "Runs \"git <git-arguments>\" on each git subdirectory."
+}
+
+if [[ $# -lt 1 ]]; then
+   show_usage
+   exit
+fi
+
+GIT_SUBDIRS=`find . -name ".git"`
+
+if [ -n "$GIT_SUBDIRS" ]; then
+   echo "Running \"git $@\" on git subdirectories..."
+   for dir in $GIT_SUBDIRS; do
+      echo "-------------------------------------------------- ${dir%/*}"
+      cd ${dir%/*};
+      git $@ || exit
+      cd -
+   done
+else
+   echo "No git repositories found under current working directory."
+fi
