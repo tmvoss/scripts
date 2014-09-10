@@ -7,8 +7,8 @@
 # Show help if requested or upon input error
 #-------------------------------------------
 show_usage() {
-   echo "Usage: $0 <search_term> [search_directory]"
-   echo "       $0 --help"
+   echo "Usage: search <search_term> [search_directory]"
+   echo "       search --help"
 }
 
 if [[ $# -lt 1 || $# -gt 2 ]]; then
